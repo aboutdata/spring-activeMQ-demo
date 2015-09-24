@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="connectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://localhost:61616" />
+	</bean>
+	
+	<!-- config  jmsTemplate-->
+     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+         <property name="connectionFactory" ref="connectionFactory" />
+         <property name="defaultDestination" ref="defaultDestination" /> 
+     </bean>
+     
+     <!--  Default Destination Queue Definition-->
+    <bean id="defaultDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="springQueue"/>
+    </bean>
+    
+    
+    
+    <!-- Message Receiver Definition  Listener
+    <bean id="messageReceiver" class="com.anhao.jms.MessageReceiver">
+    </bean>
+ 
+    <bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destinationName" value="springQueue" />
+        <property name="messageListener" ref="messageReceiver" />
+    </bean>
+    -->
+    
+</beans>
